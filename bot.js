@@ -36,6 +36,7 @@ client.on("message", message => {
       .setThumbnail(message.author.avatarURL)
       .setDescription(`
 
+
 	  
 ("═════ஜ۩۞۩ஜ══════════ஜ۩۞۩ஜ═════")
 	  
