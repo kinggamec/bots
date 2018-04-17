@@ -657,7 +657,7 @@ client.on('message', message => {
 
 
 client.on('message', message => {
-    if (message.content.startsWith("رابط")) {
+    if (message.content.startsWith("*رابط")) {
 
   message.channel.createInvite({
         thing: true,
@@ -682,6 +682,9 @@ client.on('message', message => {
 ---------------------
 -هذا الرابط صالح لمده 24 ساعه فقط
 ---------------------
+3RB_BOT 
+---------------------
+
 **`)
       message.author.sendEmbed(Embed11)
     }
@@ -2540,7 +2543,6 @@ client.on('ready',  () => {
 
 
 
-/*
 const ms = require('ms');
 
 const fs = require('fs');
@@ -2624,7 +2626,7 @@ delete warn[message.author.id];
   
   }
 });
-*/
+
 
 
 
