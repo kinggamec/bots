@@ -2540,7 +2540,8 @@ client.on('ready',  () => {
 
 
 
-
+/*
+const ms = require('ms');
 
 const fs = require('fs');
 
@@ -2623,7 +2624,7 @@ delete warn[message.author.id];
   
   }
 });
-
+*/
 
 
 
