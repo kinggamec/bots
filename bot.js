@@ -2541,7 +2541,6 @@ client.on('ready',  () => {
 
 
 
-const ms = require("ms");
 
 const fs = require('fs');
 
