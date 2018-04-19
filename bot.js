@@ -36,7 +36,6 @@ client.on("message", message => {
       .setThumbnail(message.author.avatarURL)
       .setDescription(`
 
-
 	  
 ("═════ஜ۩۞۩ஜ══════════ஜ۩۞۩ஜ═════")
 	  
@@ -104,6 +103,7 @@ client.on("message", message => {
 『roleid /لمعرفه ايدي الرتبه』
 『welcome/قم باضافه روم باسم welcome}
 (dr مسح الرولات جميعها
+『pc /برودكاست بالتكيد برياكشن』
 (dc مسح الرومات جميعا
 **
 
@@ -200,6 +200,73 @@ message.author.sendEmbed(embed)
 
 
 var prefix="*"
+//وقت البوت
+client.on('message', message => {
+        if (message.content.startsWith(prefix + "uptime")) {
+    let ms = client.uptime;
+    let cd = 24 * 60 * 60 * 1000; // Calc days
+    let ch = 60 * 60 * 1000; // Calc hours
+    let cm = 60 * 1000; // Calc minutes
+    let cs = 1000; // Calc seconds
+    let days = Math.floor(ms / cd);
+    let dms = days * cd; // Days, in ms
+    let hours = Math.floor((ms - dms) / ch);
+    let hms = hours * ch; // Hours, in ms
+    let minutes = Math.floor((ms - dms - hms) / cm);
+    let mms = minutes * cm; // Minutes, in ms
+    let seconds = Math.round((ms - dms - hms - mms) / cs);
+    if (seconds === 60) {
+        minutes++; // Increase by 1
+        seconds = 0;
+    }
+    if (minutes === 60) {
+        hours++; // Inc by 1
+        minutes = 0;
+    }
+    if (hours === 24) {
+        days++; // Increase by 1
+        hours = 0;
+    }
+    let dateStrings = [];
+
+    if (days === 1) {
+        dateStrings.push('**1** day');
+    } else if (days > 1) {
+        dateStrings.push('**' + String(days) + '** days');
+    }
+
+    if (hours === 1) {
+        dateStrings.push('**1** hour');
+    } else if (hours > 1) {
+        dateStrings.push('**' + String(hours) + '** hours');
+    }
+
+    if (minutes === 1) {
+        dateStrings.push('**1** minute');
+    } else if (minutes > 1) {
+        dateStrings.push('**' + String(minutes) + '** minutes');
+    }
+
+    if (seconds === 1) {
+        dateStrings.push('**1** second');
+    } else if (seconds > 1) {
+        dateStrings.push('**' + String(seconds) + '** seconds');
+    }
+
+    let dateString = '';
+    for (let i = 0; i < dateStrings.length - 1; i++) {
+        dateString += dateStrings[i];
+        dateString += ', ';
+    }
+    if (dateStrings.length >= 2) {
+        dateString = dateString.slice(0, dateString.length - 2) + dateString.slice(dateString.length - 1);
+        dateString += 'and ';
+    }
+    dateString += dateStrings[dateStrings.length - 1];
+    message.channel.send(dateString);
+}
+});
+
 
 
 
@@ -259,8 +326,8 @@ client.on("message", message => {
     });
   }
 });
-*/
 
+*/
 
 
 
@@ -658,7 +725,7 @@ client.on('message', message => {
 
 
 client.on('message', message => {
-    if (message.content.startsWith("*رابط")) {
+    if (message.content.startsWith("رابط")) {
 
   message.channel.createInvite({
         thing: true,
@@ -683,9 +750,6 @@ client.on('message', message => {
 ---------------------
 -هذا الرابط صالح لمده 24 ساعه فقط
 ---------------------
-3RB_BOT 
----------------------
-
 **`)
       message.author.sendEmbed(Embed11)
     }
@@ -1169,6 +1233,76 @@ message.channel.fetchMessages({
 };
 
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ client.on('message', message => {
+              if(!message.channel.guild) return;
+    var prefix = "*";
+    if(message.content.startsWith(prefix + 'pc')) {
+    if(!message.channel.guild) return message.channel.send('**هذا الأمر فقط للسيرفرات**').then(m => m.delete(5000));
+  if(!message.member.hasPermission('ADMINISTRATOR')) return      message.channel.send('**للأسف لا تمتلك صلاحية** `ADMINISTRATOR`' );
+    let args = message.content.split(" ").join(" ").slice(2 + prefix.length);
+    let copy = "Dragon";
+    let request = `Requested By ${message.author.username}`;
+    if (!args) return message.reply('**يجب عليك كتابة كلمة او جملة لإرسال البرودكاست**');message.channel.send(`**هل أنت متأكد من إرسالك البرودكاست؟ \nمحتوى البرودكاست:** \` ${args}\``).then(msg => {
+    msg.react('✅')
+    .then(() => msg.react('❌'))
+    .then(() =>msg.react('✅'))
+    
+    let reaction1Filter = (reaction, user) => reaction.emoji.name === '✅' && user.id === message.author.id;
+    let reaction2Filter = (reaction, user) => reaction.emoji.name === '❌' && user.id === message.author.id;
+    
+    let reaction1 = msg.createReactionCollector(reaction1Filter, { time: 12000 });
+    let reaction2 = msg.createReactionCollector(reaction2Filter, { time: 12000 });
+    reaction1.on("collect", r => {
+    message.channel.send(`☑ | Done ... The Broadcast Message Has Been Sent For ${message.guild.members.size} Members`).then(m => m.delete(5000));
+    message.guild.members.forEach(m => {
+    var bc = new
+       Discord.RichEmbed()
+       .setColor('RANDOM')
+       .setTitle('Broadcast')
+       .addField('Server', message.guild.name)
+       .addField('Sender', message.author.username)
+       .addField('Message', args)
+       .setThumbnail(message.author.avatarURL)
+       .setFooter(copy, client.user.avatarURL);
+    m.send({ embed: bc })
+    msg.delete();
+    })
+    })
+    reaction2.on("collect", r => {
+    message.channel.send(`**Broadcast Canceled.**`).then(m => m.delete(5000));
+    msg.delete();
+    })
+    })
+    }
+    });
+
+
+
+
+
+
 
 
 
@@ -2543,8 +2677,9 @@ client.on('ready',  () => {
 
 
 
-/*
-const ms = require('ms');
+
+
+const ms = require("ms");
 
 const fs = require('fs');
 
@@ -2627,7 +2762,8 @@ delete warn[message.author.id];
   
   }
 });
-*/
+
+
 
 
 
@@ -2658,10 +2794,6 @@ client.on('guildMemberAdd', member => {
 if (!channel) return;
 channel.send({embed : embed});
 });
-
-
-
-
 
 
 
