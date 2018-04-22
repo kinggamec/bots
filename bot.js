@@ -3059,7 +3059,7 @@ if (message.author.id !== '331383478719479809') return message.reply('** هذا 
  
  
  
- 
+ /*
 const giphy = require('giphy-api')();
     function getValue(key, array) {
   for (var el in array) {
@@ -3097,7 +3097,7 @@ const giphy = require('giphy-api')();
 
 
 
-
+*/
 
 
 
